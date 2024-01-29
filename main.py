@@ -91,7 +91,8 @@ def contact():
 
 @app.route("/post/<int:post_id>")
 def display_post(post_id):
-    post = posts_data[post_id]
+    post_position = post_id - 1
+    post = posts_data[post_position]
     return render_template("post.html", post=post, year=current_year)
 
 
