@@ -8,7 +8,8 @@
 # to be created if the request returns null. Data for these fake
 # posts can be found in the static/assets/data directory.
 from flask import Flask, render_template, request
-import requests
+from flask_bootstrap import Bootstrap5
+from models.blogpost import BlogPost, db
 import datetime
 import smtplib
 from email.mime.text import MIMEText
@@ -21,24 +22,39 @@ HOST_EMAIL = os.environ["HOST_EMAIL"]
 FROM_ADDR = os.environ["FROM_ADDR"]
 FROM_ADDR_APP_PASSWORD = os.environ["FROM_ADDR_APP_PASSWORD"]
 TO_ADDR = os.environ["TO_ADDR"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 
-def request_dummy_blog_posts():
-    dummy_blogs_response = requests.get("https://api.npoint.io/c1b18044c1eb6b6d0eb1")
-    dummy_blogs_response.raise_for_status()
-    dummy_blogs = dummy_blogs_response.json()
-    return dummy_blogs
-
-
-posts_data = request_dummy_blog_posts()
 current_year = datetime.datetime.now().year
 app = Flask(__name__)
+Bootstrap5(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.secret_key = SECRET_KEY
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/")
 def home():
-    return render_template("index.html", posts=posts_data, year=current_year)
+    all_posts = db.session.execute(db.select(BlogPost)).scalars()
+    return render_template("index.html", posts=all_posts, year=current_year)
 
+
+@app.route("/post/<int:post_id>")
+def display_post(post_id):
+    # TODO: Retrieve a BlogPost from the database based on the post_id.
+    post = db.get_or_404(BlogPost, post_id)
+    print(post.date)
+    return render_template("post.html", post=post, year=current_year)
+
+
+# TODO: add_new_post() to create a new blog post
+
+# TODO: edit_post() to change an existing blog post
+
+# TODO: delete_post() to remove a blog post from the database
 
 @app.route("/about")
 def about():
@@ -87,13 +103,6 @@ def contact():
             )
         return render_template("contact.html", year=current_year, msg_sent=True)
     return render_template("contact.html", year=current_year, msg_sent=False)
-
-
-@app.route("/post/<int:post_id>")
-def display_post(post_id):
-    post_position = post_id - 1
-    post = posts_data[post_position]
-    return render_template("post.html", post=post, year=current_year)
 
 
 if __name__ == "__main__":
