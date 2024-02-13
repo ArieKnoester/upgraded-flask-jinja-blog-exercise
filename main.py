@@ -39,7 +39,6 @@ def home():
 
 @app.route("/post/<int:post_id>")
 def display_post(post_id):
-    # TODO: Retrieve a BlogPost from the database based on the post_id.
     post = db.get_or_404(BlogPost, post_id)
     return render_template("post.html", post=post, year=current_year)
 
