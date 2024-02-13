@@ -2,11 +2,6 @@
 # Other template sites. Not used here, but links added for reference:
 # https://bootstrapmade.com/
 # https://getbootstrap.com/docs/5.0/examples/
-
-# Fake blog posts were created at: https://www.npoint.io/
-# Newly created 'APIs' go away after a while. A new one may need
-# to be created if the request returns null. Data for these fake
-# posts can be found in the static/assets/data directory.
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from models.blogpost import BlogPost, db
@@ -46,7 +41,6 @@ def home():
 def display_post(post_id):
     # TODO: Retrieve a BlogPost from the database based on the post_id.
     post = db.get_or_404(BlogPost, post_id)
-    print(post.date)
     return render_template("post.html", post=post, year=current_year)
 
 
