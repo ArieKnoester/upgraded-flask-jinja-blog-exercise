@@ -5,6 +5,8 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from models.blogpost import BlogPost, db
+from forms.forms import BlogForm
+from flask_ckeditor import CKEditor
 import datetime
 import smtplib
 from email.mime.text import MIMEText
@@ -26,6 +28,7 @@ Bootstrap5(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.secret_key = SECRET_KEY
 db.init_app(app)
+CKEditor(app)
 
 with app.app_context():
     db.create_all()
@@ -43,11 +46,15 @@ def display_post(post_id):
     return render_template("post.html", post=post, year=current_year)
 
 
-# TODO: add_new_post() to create a new blog post
+@app.route("/new-post")
+def new_post():
+    blog_form = BlogForm()
+    return render_template("make-post.html", form=blog_form)
 
 # TODO: edit_post() to change an existing blog post
 
 # TODO: delete_post() to remove a blog post from the database
+
 
 @app.route("/about")
 def about():
