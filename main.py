@@ -8,7 +8,7 @@ from flask_bootstrap import Bootstrap5
 from models.blogpost import BlogPost, db
 from forms.forms import BlogForm
 from flask_ckeditor import CKEditor
-# from flask_ckeditor.utils import cleanify
+import nh3
 import datetime
 import smtplib
 from email.mime.text import MIMEText
@@ -58,10 +58,11 @@ def new_post():
             title=request.form.get("title"),
             subtitle=request.form.get("subtitle"),
             date=datetime.datetime.now().strftime("%B %d, %Y"),
-            body=request.form.get("body"),
+            body=nh3.clean(request.form.get("body")),
             author=request.form.get("author"),
             img_url=request.form.get("img_url")
         )
+        print(new_blog_post.body)
         db.session.add(new_blog_post)
         db.session.commit()
         return redirect(url_for('home'))
