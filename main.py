@@ -63,7 +63,7 @@ def new_post():
         db.session.add(new_blog_post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template("make-post.html", form=new_blog_form, h1_text="New Post")
+    return render_template("make-post.html", form=new_blog_form, h1_text="New Post", year=current_year)
 
 
 @app.route("/edit-post", methods=["GET", "POST"])
@@ -87,7 +87,7 @@ def edit_post():
         db.session.commit()
         return redirect(url_for(f'display_post', post_id=post_id))
 
-    return render_template("make-post.html", form=edit_blog_form, h1_text="Edit Post")
+    return render_template("make-post.html", form=edit_blog_form, h1_text="Edit Post", year=current_year)
 
 # TODO: delete_post() to remove a blog post from the database
 
