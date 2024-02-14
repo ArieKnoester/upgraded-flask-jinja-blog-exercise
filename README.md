@@ -17,5 +17,5 @@ Changes from the original include:
 While flask-ckeditor's documentation states it has a 'cleanify' method for HTML sanitizing, it is 
 apparently missing as of version 0.5.1. Version 0.5.2 adds it back, but there is no release date for it
 as of 2024-02-14 (https://flask-ckeditor.readthedocs.io/en/latest/changelog.html). I looked into Bleach, 
-but it has been depreciated (https://pypi.org/project/bleach/). The github repo for Bleach lead me to 
+but it has been depreciated (https://pypi.org/project/bleach/). The GitHub repo for Bleach lead me to 
 nh3 (https://nh3.readthedocs.io/en/latest/).
