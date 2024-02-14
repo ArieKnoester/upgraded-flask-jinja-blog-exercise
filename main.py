@@ -3,6 +3,7 @@
 # https://bootstrapmade.com/
 # https://getbootstrap.com/docs/5.0/examples/
 from flask import Flask, render_template, request, redirect, url_for
+from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
 from models.blogpost import BlogPost, db
 from forms.forms import BlogForm
@@ -31,6 +32,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.secret_key = SECRET_KEY
 db.init_app(app)
 CKEditor(app)
+CSRFProtect(app)
 
 with app.app_context():
     db.create_all()
