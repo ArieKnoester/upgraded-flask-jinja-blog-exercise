@@ -63,7 +63,7 @@ def new_post():
         db.session.add(new_blog_post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template("make-post.html", form=new_blog_form)
+    return render_template("make-post.html", form=new_blog_form, h1_text="New Post")
 
 
 # TODO: edit_post() to change an existing blog post
@@ -78,7 +78,7 @@ def edit_post():
         img_url=post.img_url,
         body=post.body
     )
-    return render_template("make-post.html", form=edit_blog_form)
+    return render_template("make-post.html", form=edit_blog_form, h1_text="Edit Post")
 
 # TODO: delete_post() to remove a blog post from the database
 
