@@ -50,8 +50,8 @@ def display_post(post_id):
 
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
-    blog_form = BlogForm()
-    if blog_form.validate_on_submit():
+    new_blog_form = BlogForm()
+    if new_blog_form.validate_on_submit():
         new_blog_post = BlogPost(
             title=request.form.get("title"),
             subtitle=request.form.get("subtitle"),
@@ -63,9 +63,22 @@ def new_post():
         db.session.add(new_blog_post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template("make-post.html", form=blog_form)
+    return render_template("make-post.html", form=new_blog_form)
+
 
 # TODO: edit_post() to change an existing blog post
+@app.route("/edit-post", methods=["GET", "POST"])
+def edit_post():
+    post_id = request.args.get("post_id")
+    post = db.get_or_404(BlogPost, post_id)
+    edit_blog_form = BlogForm(
+        title=post.title,
+        subtitle=post.subtitle,
+        author=post.author,
+        img_url=post.img_url,
+        body=post.body
+    )
+    return render_template("make-post.html", form=edit_blog_form)
 
 # TODO: delete_post() to remove a blog post from the database
 
