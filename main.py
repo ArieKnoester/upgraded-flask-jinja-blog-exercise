@@ -2,11 +2,12 @@
 # Other template sites. Not used here, but links added for reference:
 # https://bootstrapmade.com/
 # https://getbootstrap.com/docs/5.0/examples/
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from models.blogpost import BlogPost, db
 from forms.forms import BlogForm
 from flask_ckeditor import CKEditor
+# from flask_ckeditor.utils import cleanify
 import datetime
 import smtplib
 from email.mime.text import MIMEText
@@ -46,9 +47,21 @@ def display_post(post_id):
     return render_template("post.html", post=post, year=current_year)
 
 
-@app.route("/new-post")
+@app.route("/new-post", methods=["GET", "POST"])
 def new_post():
     blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        new_blog_post = BlogPost(
+            title=request.form.get("title"),
+            subtitle=request.form.get("subtitle"),
+            date=datetime.datetime.now().strftime("%B %d, %Y"),
+            body=request.form.get("body"),
+            author=request.form.get("author"),
+            img_url=request.form.get("img_url")
+        )
+        db.session.add(new_blog_post)
+        db.session.commit()
+        return redirect(url_for('home'))
     return render_template("make-post.html", form=blog_form)
 
 # TODO: edit_post() to change an existing blog post
