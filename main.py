@@ -89,7 +89,12 @@ def edit_post():
 
     return render_template("make-post.html", form=edit_blog_form, h1_text="Edit Post", year=current_year)
 
-# TODO: delete_post() to remove a blog post from the database
+
+@app.route("/delete/<int:post_id>")
+def delete(post_id):
+    BlogPost.query.filter_by(id=post_id).delete()
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 @app.route("/about")
