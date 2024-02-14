@@ -62,7 +62,6 @@ def new_post():
             author=request.form.get("author"),
             img_url=request.form.get("img_url")
         )
-        print(new_blog_post.body)
         db.session.add(new_blog_post)
         db.session.commit()
         return redirect(url_for('home'))
