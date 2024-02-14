@@ -22,8 +22,9 @@ FROM_ADDR_APP_PASSWORD = os.environ["FROM_ADDR_APP_PASSWORD"]
 TO_ADDR = os.environ["TO_ADDR"]
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-
+# For the footer's copyright year.
 current_year = datetime.datetime.now().year
+
 app = Flask(__name__)
 Bootstrap5(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
