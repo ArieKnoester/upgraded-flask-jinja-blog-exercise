@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
 from models.blogpost import BlogPost
 from models.user import User
-from forms.forms import BlogForm, RegisterForm
+from forms.forms import BlogForm, RegisterForm, LoginForm
 from flask_ckeditor import CKEditor
 import nh3
 import datetime
@@ -86,7 +86,8 @@ def register():
 
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    login_form = LoginForm()
+    return render_template("login.html", form=login_form)
 
 
 @app.route('/logout')
