@@ -5,6 +5,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
+from flask_gravatar import Gravatar
 from models.blogpost import BlogPost, db
 from forms.forms import BlogForm
 from flask_ckeditor import CKEditor
