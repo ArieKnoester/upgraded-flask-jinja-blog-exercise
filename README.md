@@ -1,5 +1,7 @@
 # upgraded-flask-jinja-blog-exercise
 
+Work in progress.
+
 ## Description
 
 An updated version of a simple blog exercise at https://github.com/ArieKnoester/flask-jinja-blog-exercise
@@ -19,3 +21,10 @@ apparently missing as of version 0.5.1. Version 0.5.2 adds it back, but there is
 as of 2024-02-14 (https://flask-ckeditor.readthedocs.io/en/latest/changelog.html). I looked into Bleach, 
 but it has been depreciated (https://pypi.org/project/bleach/). The GitHub repo for Bleach lead me to 
 nh3 (https://nh3.readthedocs.io/en/latest/).
+
+### TODO:
+- Implement user registration.
+- Implement user login.
+- Route protection.
+- Relate User table to BlogPost table.
+- Any user can leave comments on posted blogs.
