@@ -24,7 +24,7 @@
                                 <h2 class="post-title">{{ post.title }}</h2>
                                 <h3 class="post-subtitle">{{ post.subtitle }}</h3>
                             </a>
-                            {% if current_user.id == 1 %}
+                            {% if current_user.is_admin %}
                                 <p class="post-meta">
                                     Posted by
                                     <a href="#!">{{ post.author }}</a>
@@ -40,7 +40,7 @@
 
                     <!-- New Post -->
                     <div class="d-flex justify-content-end mb-4">
-                        {% if current_user.id == 1 %}
+                        {% if current_user.is_admin %}
                             <a
                               class="btn btn-primary float-right"
                               href="{{ url_for('new_post') }}"

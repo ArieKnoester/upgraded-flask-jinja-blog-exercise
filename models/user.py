@@ -9,3 +9,9 @@ class User(UserMixin, db.Model):
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
+
+    @property
+    def is_admin(self):
+        if self.id == 1:
+            return True
+        return False

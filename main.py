@@ -56,8 +56,7 @@ def load_user(user_id):
 def admin_only(function):
     @wraps(function)
     def decorated_function(*args, **kwargs):
-        print(current_user.id)
-        if current_user.id != 1:
+        if not current_user.is_admin:
             return abort(403)
         else:
             return function(*args, **kwargs)
