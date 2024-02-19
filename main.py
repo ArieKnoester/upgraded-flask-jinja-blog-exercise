@@ -56,6 +56,16 @@ def register():
     return render_template("register.html", form=register_form)
 
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    return redirect(url_for('home'))
+
+
 @app.route("/post/<int:post_id>")
 def display_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
