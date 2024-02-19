@@ -2,11 +2,12 @@
 # Other template sites. Not used here, but links added for reference:
 # https://bootstrapmade.com/
 # https://getbootstrap.com/docs/5.0/examples/
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
 from flask_login import login_user, LoginManager, login_required, logout_user
 from flask_gravatar import Gravatar
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
 from models.blogpost import BlogPost
 from models.user import User
@@ -52,7 +53,34 @@ def home():
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        print(register_form.email.data)
+        user_email = register_form.email.data
+        user_password = register_form.password.data
+        user_name = register_form.name.data
+
+        # Check if email already exists.
+        user_exists = db.session.query(db.exists().where(User.email == user_email)).scalar()
+        if user_exists:
+            flash("An account already exists with that email address. Log in instead.")
+            return redirect(url_for('login'))
+
+        hashed_password = generate_password_hash(
+            password=user_password,
+            method="pbkdf2",
+            salt_length=8
+        )
+
+        # Pycharm Community Edition apparently has a bug which may highlight
+        # these arguments as 'unexpected arguments' when using flask_sqlalchemy
+        # and any Mixin class.
+        new_user = User(
+            email=user_email,
+            password=hashed_password,
+            name=user_name
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('home'))
     return render_template("register.html", form=register_form)
 
 
