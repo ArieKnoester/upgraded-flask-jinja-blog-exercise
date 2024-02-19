@@ -9,7 +9,8 @@ from flask_login import login_user, LoginManager, login_required, logout_user
 from flask_gravatar import Gravatar
 from models.db import db
 from models.blogpost import BlogPost
-from forms.forms import BlogForm
+from models.user import User
+from forms.forms import BlogForm, RegisterForm
 from flask_ckeditor import CKEditor
 import nh3
 import datetime
