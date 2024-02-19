@@ -2,8 +2,8 @@
 # https://wtforms.readthedocs.io/en/3.0.x/
 # https://flask-ckeditor.readthedocs.io/en/latest/basic.html
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, URLField
-from wtforms.validators import DataRequired, URL
+from wtforms import StringField, SubmitField, URLField, EmailField, PasswordField
+from wtforms.validators import DataRequired, URL, Length
 from flask_ckeditor import CKEditorField
 
 
@@ -30,4 +30,19 @@ class BlogForm(FlaskForm):
     )
     submit = SubmitField(
         label="Submit Post"
+    )
+
+
+class RegisterForm(FlaskForm):
+    email = EmailField(
+        label="Email",
+        validators=[EmailField(), DataRequired()]
+    )
+    password = PasswordField(
+        label="Password",
+        validators=[Length(min=8, message="Must be at least 8 characters"), DataRequired()]
+    )
+    name = StringField(
+        label="Name",
+        validators=[DataRequired()]
     )
