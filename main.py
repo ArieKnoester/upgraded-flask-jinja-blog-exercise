@@ -48,6 +48,14 @@ def home():
     return render_template("index.html", posts=all_posts, year=current_year)
 
 
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+        print(register_form.email.data)
+    return render_template("register.html", form=register_form)
+
+
 @app.route("/post/<int:post_id>")
 def display_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
