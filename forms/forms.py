@@ -3,7 +3,7 @@
 # https://flask-ckeditor.readthedocs.io/en/latest/basic.html
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, URLField, EmailField, PasswordField
-from wtforms.validators import DataRequired, URL, Length
+from wtforms.validators import DataRequired, URL, Length, Email
 from flask_ckeditor import CKEditorField
 
 
@@ -36,13 +36,16 @@ class BlogForm(FlaskForm):
 class RegisterForm(FlaskForm):
     email = EmailField(
         label="Email",
-        validators=[EmailField(), DataRequired()]
+        validators=[Email(), DataRequired()]
     )
     password = PasswordField(
         label="Password",
-        validators=[Length(min=8, message="Must be at least 8 characters"), DataRequired()]
+        validators=[Length(min=8), DataRequired()]
     )
     name = StringField(
         label="Name",
         validators=[DataRequired()]
+    )
+    submit = SubmitField(
+        label="Sign me up!"
     )
