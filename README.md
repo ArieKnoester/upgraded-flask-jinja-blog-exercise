@@ -25,6 +25,8 @@ nh3 (https://nh3.readthedocs.io/en/latest/).
 ### TODO:
 - Implement user registration.
 - Implement user login.
+- Implement user logout.
+- Hide some nav elements depending on user authentication.
 - Route protection.
 - Relate User table to BlogPost table.
 - Any user can leave comments on posted blogs.
