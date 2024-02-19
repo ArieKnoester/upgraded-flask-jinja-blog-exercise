@@ -14,6 +14,8 @@ Changes from the original include:
 - flask_sqlalchemy
 - flask_ckeditor
 - nh3
+- flask_login
+- flask_gravatar
 
 ### Notes:
 While flask-ckeditor's documentation states it has a 'cleanify' method for HTML sanitizing, it is 
