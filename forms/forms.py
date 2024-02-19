@@ -49,3 +49,18 @@ class RegisterForm(FlaskForm):
     submit = SubmitField(
         label="Sign me up!"
     )
+
+
+class LoginForm(FlaskForm):
+    email = EmailField(
+        label="Email",
+        validators=[Email(), DataRequired()]
+    )
+    password = PasswordField(
+        label="Password",
+        validators=[Length(min=8), DataRequired()]
+    )
+    submit = SubmitField(
+        label="Let me in!"
+    )
+
