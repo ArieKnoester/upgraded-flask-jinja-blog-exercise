@@ -1,13 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from models.db import db
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
-
-
-class Base(DeclarativeBase):
-    pass
-
-
-db = SQLAlchemy(model_class=Base)
 
 
 class BlogPost(db.Model):

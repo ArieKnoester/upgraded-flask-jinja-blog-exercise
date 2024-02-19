@@ -7,7 +7,8 @@ from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
 from flask_login import login_user, LoginManager, login_required, logout_user
 from flask_gravatar import Gravatar
-from models.blogpost import BlogPost, db
+from models.db import db
+from models.blogpost import BlogPost
 from forms.forms import BlogForm
 from flask_ckeditor import CKEditor
 import nh3
