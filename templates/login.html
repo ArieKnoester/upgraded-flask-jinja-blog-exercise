@@ -21,12 +21,14 @@ include "header.html" %}
 <main class="mb-4">
   <div class="container">
     <div class="row">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <p class=flashes>{{ message }}</p>
-        {% endif %}
-      {% endwith %}
       <div class="col-lg-8 col-md-10 mx-auto">
+        {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+          {% if messages %}
+            <p class=flashes style="color: red">{{ message }}</p>
+            {% endif %}
+          {% endfor %}
+        {% endwith %}
         {{ render_form(form, novalidate=True) }}
       </div>
     </div>

@@ -38,9 +38,17 @@ app.secret_key = SECRET_KEY
 db.init_app(app)
 CKEditor(app)
 CSRFProtect(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 with app.app_context():
     db.create_all()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.execute(db.select(User).filter_by(id=user_id)).scalar()
 
 
 @app.route("/")
@@ -81,12 +89,34 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('home'))
+
     return render_template("register.html", form=register_form)
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
+    if login_form.validate_on_submit():
+        email_input = request.form.get("email")
+        password_input = request.form.get("password")
+
+        # Email has UNIQUE constraint in database table.
+        user_exists = db.session.query(db.exists().where(User.email == email_input)).scalar()
+
+        if not user_exists:
+            flash("Email not found. Please try again.")
+            return render_template("login.html", form=login_form)
+
+        user_to_login = db.session.execute(db.select(User).filter_by(email=email_input)).scalar()
+        is_correct_password = check_password_hash(user_to_login.password, password_input)
+
+        if not is_correct_password:
+            flash("Password incorrect. Please try again.")
+            return render_template("login.html", form=login_form)
+
+        login_user(user_to_login)
+        return redirect(url_for('home'))
+
     return render_template("login.html", form=login_form)
 
 
