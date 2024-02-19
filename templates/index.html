@@ -24,13 +24,14 @@
                                 <h2 class="post-title">{{ post.title }}</h2>
                                 <h3 class="post-subtitle">{{ post.subtitle }}</h3>
                             </a>
-                            <!-- TODO: Add code to delete posts below -->
-                            <p class="post-meta">
-                                Posted by
-                                <a href="#!">{{ post.author }}</a>
-                                on {{ post.date }}
-                                <a href="{{ url_for('delete', post_id=post.id) }}">✘</a>
-                            </p>
+                            {% if current_user.id == 1 %}
+                                <p class="post-meta">
+                                    Posted by
+                                    <a href="#!">{{ post.author }}</a>
+                                    on {{ post.date }}
+                                    <a href="{{ url_for('delete', post_id=post.id) }}">✘</a>
+                                </p>
+                            {% endif %}
                         </div>
                         <!-- Divider-->
                         <hr class="my-4" />
@@ -39,18 +40,19 @@
 
                     <!-- New Post -->
                     <div class="d-flex justify-content-end mb-4">
-                        <!-- TODO: Adding new posts -->
-                        <a
-                          class="btn btn-primary float-right"
-                          href="{{ url_for('new_post') }}"
-                          >Create New Post</a
-                        >
+                        {% if current_user.id == 1 %}
+                            <a
+                              class="btn btn-primary float-right"
+                              href="{{ url_for('new_post') }}"
+                              >Create New Post</a
+                            >
+                        {% endif %}
                       </div>
 
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4">
+                    <!--<div class="d-flex justify-content-end mb-4">
                         <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

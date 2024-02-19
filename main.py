@@ -2,10 +2,10 @@
 # Other template sites. Not used here, but links added for reference:
 # https://bootstrapmade.com/
 # https://getbootstrap.com/docs/5.0/examples/
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, abort, render_template, request, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
-from flask_login import login_user, LoginManager, login_required, logout_user
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_gravatar import Gravatar
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
@@ -20,6 +20,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
+from functools import wraps
+
 
 load_dotenv(".env")
 HOST_EMAIL = os.environ["HOST_EMAIL"]
@@ -49,6 +51,17 @@ with app.app_context():
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.execute(db.select(User).filter_by(id=user_id)).scalar()
+
+
+def admin_only(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        print(current_user.id)
+        if current_user.id != 1:
+            return abort(403)
+        else:
+            return function(*args, **kwargs)
+    return decorated_function
 
 
 @app.route("/")
@@ -88,6 +101,7 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
+        login_user(new_user)
         return redirect(url_for('home'))
 
     return render_template("register.html", form=register_form)
@@ -133,6 +147,7 @@ def display_post(post_id):
 
 
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
 def new_post():
     new_blog_form = BlogForm()
     if new_blog_form.validate_on_submit():
@@ -151,6 +166,7 @@ def new_post():
 
 
 @app.route("/edit-post", methods=["GET", "POST"])
+@admin_only
 def edit_post():
     post_id = request.args.get("post_id")
     post = db.get_or_404(BlogPost, post_id)
@@ -175,6 +191,7 @@ def edit_post():
 
 
 @app.route("/delete/<int:post_id>")
+@admin_only
 def delete(post_id):
     BlogPost.query.filter_by(id=post_id).delete()
     db.session.commit()
