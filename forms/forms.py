@@ -16,10 +16,11 @@ class BlogForm(FlaskForm):
         label="Subtitle",
         validators=[DataRequired()]
     )
-    author = StringField(
-        label="Your Name",
-        validators=[DataRequired()]
-    )
+    # Likely no longer needed as the author is now a User object.
+    # author = StringField(
+    #     label="Your Name",
+    #     validators=[DataRequired()]
+    # )
     img_url = URLField(
         label="Blog Image URL",
         validators=[URL()]
