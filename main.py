@@ -35,7 +35,7 @@ current_year = datetime.datetime.now().year
 
 app = Flask(__name__)
 Bootstrap5(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blogs.db'
 app.secret_key = SECRET_KEY
 db.init_app(app)
 CKEditor(app)
@@ -148,14 +148,17 @@ def display_post(post_id):
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def new_post():
-    new_blog_form = BlogForm()
+    new_blog_form = BlogForm(
+        author=current_user.name
+    )
     if new_blog_form.validate_on_submit():
         new_blog_post = BlogPost(
             title=request.form.get("title"),
             subtitle=request.form.get("subtitle"),
             date=datetime.datetime.now().strftime("%B %d, %Y"),
             body=nh3.clean(request.form.get("body")),
-            author=request.form.get("author"),
+            author=current_user,
+            # author=request.form.get("author"),
             img_url=request.form.get("img_url")
         )
         db.session.add(new_blog_post)
@@ -172,7 +175,7 @@ def edit_post():
     edit_blog_form = BlogForm(
         title=post.title,
         subtitle=post.subtitle,
-        author=post.author,
+        # author=post.author.name,
         img_url=post.img_url,
         body=post.body
     )
@@ -180,7 +183,7 @@ def edit_post():
     if edit_blog_form.validate_on_submit():
         post.title = edit_blog_form.title.data
         post.subtitle = edit_blog_form.subtitle.data
-        post.author = edit_blog_form.author.data
+        # post.author = edit_blog_form.author.data
         post.img_url = edit_blog_form.img_url.data
         post.body = edit_blog_form.body.data
         db.session.commit()
