@@ -32,9 +32,18 @@ a method in the User class as an @property as a quick compromise. I may update t
 'is_admin' boolean column as that is the typical way. It even states in the course materials,
   > _"In the future, maybe we will want to invite other users to write posts in the blog and grant them
       the admin privileges."_
+
+- The course requirements specified that only a logged-in user should be able to comment on posts. If 
+a user is not logged-in, and they try to submit a comment they should receive a flask message informing 
+them and are redirected to the Login route. In my opinion, I think this design is bad UX. The comment 
+field is a ckeditor field, and they could have spent a lot of time formatting their comment. So I chose
+a different approach. For unauthenticated users, the comment form is not rendered. The text "Want to 
+comment on this post? Register or Login!" is displayed in its place.
   
 ### TODO:
 - ~~Relate User table to BlogPost table.~~
-- Implement a comments form and db table.
-- Relate comments table to other tables.
-- Only registered users can leave comments on posted blogs.
+- ~~Implement a comments form and db table.~~
+- ~~Relate comments table to other tables.~~
+- ~~Only registered users can leave comments on posted blogs.~~
+- Make all comments on a post visible.
+- Implement user avatar.
