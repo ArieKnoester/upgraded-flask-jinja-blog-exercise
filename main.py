@@ -140,19 +140,25 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def display_post(post_id):
     comment_form = CommentForm()
     post = db.get_or_404(BlogPost, post_id)
+    if comment_form.validate_on_submit():
+        new_comment = Comment(
+            text=nh3.clean(request.form.get("comment")),
+            author=current_user,
+            parent_post=post
+        )
+        db.session.add(new_comment)
+        db.session.commit()
     return render_template("post.html", post=post, form=comment_form, year=current_year)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def new_post():
-    new_blog_form = BlogForm(
-        author=current_user.name
-    )
+    new_blog_form = BlogForm()
     if new_blog_form.validate_on_submit():
         new_blog_post = BlogPost(
             title=request.form.get("title"),
