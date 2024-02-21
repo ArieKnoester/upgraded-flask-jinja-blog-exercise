@@ -2,7 +2,6 @@ from models.db import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String
 from flask_login import UserMixin
-from typing import List, TYPE_CHECKING
 
 ''' NOTES:
 In the SQLAlchemy documentation the PEP 484 annotation would define the posts column in
@@ -48,6 +47,7 @@ class User(UserMixin, db.Model):
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
     posts = relationship("BlogPost", back_populates="author")
+    comments = relationship("Comment", back_populates="author")
 
     @property
     def is_admin(self):

@@ -9,6 +9,7 @@ from flask_login import login_user, LoginManager, login_required, logout_user, c
 from flask_gravatar import Gravatar
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
+from models.comment import Comment
 from models.blogpost import BlogPost
 from models.user import User
 from forms.forms import BlogForm, RegisterForm, LoginForm, CommentForm

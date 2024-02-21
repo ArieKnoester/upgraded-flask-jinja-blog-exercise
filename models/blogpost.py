@@ -46,4 +46,4 @@ class BlogPost(db.Model):
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     author = relationship("User", back_populates="posts")
-
+    comments = relationship("Comment", back_populates="parent_post")
