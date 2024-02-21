@@ -43,6 +43,16 @@ CKEditor(app)
 CSRFProtect(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+gravatar = Gravatar(
+    app,
+    size=100,
+    rating='g',
+    default='retro',
+    force_default=False,
+    force_lower=False,
+    use_ssl=False,
+    base_url=None
+)
 
 
 with app.app_context():
@@ -144,6 +154,7 @@ def logout():
 def display_post(post_id):
     comment_form = CommentForm()
     post = db.get_or_404(BlogPost, post_id)
+    related_comments = db.session.execute(db.select(Comment).filter(post_id == post.id)).scalars()
     if comment_form.validate_on_submit():
         new_comment = Comment(
             text=nh3.clean(request.form.get("text")),
@@ -152,7 +163,7 @@ def display_post(post_id):
         )
         db.session.add(new_comment)
         db.session.commit()
-    return render_template("post.html", post=post, form=comment_form, year=current_year)
+    return render_template("post.html", post=post, form=comment_form, comments=related_comments, year=current_year)
 
 
 @app.route("/new-post", methods=["GET", "POST"])

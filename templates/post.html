@@ -45,18 +45,22 @@
                             {{ ckeditor.config(name='text') }}
                         {% endif %}
                         <div class="comment">
-                          <!-- TODO: Show all the comments on a post -->
-                          <ul class="commentList">
-                            <li>
-                              <div class="commenterImage">
-                                <img src="../static/assets/img/default-profile.jpg" />
-                              </div>
-                              <div class="commentText">
-                                <p>Some comment</p>
-                                <span class="date sub-text">comment author name</span>
-                              </div>
-                            </li>
-                          </ul>
+                            {% if comments %}
+                                {% for comment in comments %}
+                                    <ul class="commentList">
+                                        <li>
+                                          <div class="commenterImage">
+<!--                                            <img src="../static/assets/img/default-profile.jpg" />-->
+                                            <img src="{{ comment.author.email | gravatar }}" />
+                                          </div>
+                                          <div class="commentText">
+                                            <p>{{ comment.text | safe }}</p>
+                                            <span class="date sub-text">{{ comment.author.name }}</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
