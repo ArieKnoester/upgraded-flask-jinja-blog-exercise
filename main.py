@@ -146,7 +146,7 @@ def display_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
     if comment_form.validate_on_submit():
         new_comment = Comment(
-            text=nh3.clean(request.form.get("comment")),
+            text=nh3.clean(request.form.get("text")),
             author=current_user,
             parent_post=post
         )

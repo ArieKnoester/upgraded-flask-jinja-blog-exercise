@@ -42,7 +42,7 @@
                         {% else %}
                             {{ render_form(form, novalidate=True) }}
                             {{ ckeditor.load() }}
-                            {{ ckeditor.config(name='comment') }}
+                            {{ ckeditor.config(name='text') }}
                         {% endif %}
                         <div class="comment">
                           <!-- TODO: Show all the comments on a post -->

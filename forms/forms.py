@@ -67,7 +67,7 @@ class LoginForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    comment = CKEditorField(
+    text = CKEditorField(
         label="Comment",
         validators=[DataRequired()]
     )
