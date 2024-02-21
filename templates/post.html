@@ -35,10 +35,15 @@
                               >
                           {% endif %}
                         </div>
+                        <hr>
                         <!-- Comments Area -->
-                        {{ render_form(form, novalidate=True) }}
-                        {{ ckeditor.load() }}
-                        {{ ckeditor.config(name='body') }}
+                        {% if not current_user.is_authenticated %}
+                            <h6><p>Want to comment on this post? Register or login!</p></h6>
+                        {% else %}
+                            {{ render_form(form, novalidate=True) }}
+                            {{ ckeditor.load() }}
+                            {{ ckeditor.config(name='body') }}
+                        {% endif %}
                         <div class="comment">
                           <!-- TODO: Show all the comments on a post -->
                           <ul class="commentList">
