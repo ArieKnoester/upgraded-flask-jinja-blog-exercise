@@ -45,5 +45,5 @@ comment on this post? Register or Login!" is displayed in its place.
 - ~~Implement a comments form and db table.~~
 - ~~Relate comments table to other tables.~~
 - ~~Only registered users can leave comments on posted blogs.~~
-- Make all comments on a post visible.
-- Implement user avatar.
+- ~~Make all comments on a post visible.~~
+- ~~Implement Gravatar.~~
