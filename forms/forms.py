@@ -71,3 +71,6 @@ class CommentForm(FlaskForm):
         label="Comment",
         validators=[DataRequired()]
     )
+    submit = SubmitField(
+        label="Submit Comment"
+    )
