@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
 from models.blogpost import BlogPost
 from models.user import User
-from forms.forms import BlogForm, RegisterForm, LoginForm
+from forms.forms import BlogForm, RegisterForm, LoginForm, CommentForm
 from flask_ckeditor import CKEditor
 import nh3
 import datetime
@@ -141,8 +141,9 @@ def logout():
 
 @app.route("/post/<int:post_id>")
 def display_post(post_id):
+    comment_form = CommentForm()
     post = db.get_or_404(BlogPost, post_id)
-    return render_template("post.html", post=post, year=current_year)
+    return render_template("post.html", post=post, form=comment_form, year=current_year)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
