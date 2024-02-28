@@ -38,7 +38,7 @@
                         <hr>
                         <!-- Comments Area -->
                         {% if not current_user.is_authenticated %}
-                            <h6><p>Want to comment on this post? Register or login!</p></h6>
+                            <p class="commentAltText" >Want to comment on this post? Register or login!</p>
                         {% else %}
                             {{ render_form(form, novalidate=True) }}
                             {{ ckeditor.load() }}
