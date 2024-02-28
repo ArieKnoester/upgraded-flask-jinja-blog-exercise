@@ -25,18 +25,18 @@ from functools import wraps
 
 
 load_dotenv(".env")
-HOST_EMAIL = os.environ["HOST_EMAIL"]
-FROM_ADDR = os.environ["FROM_ADDR"]
-FROM_ADDR_APP_PASSWORD = os.environ["FROM_ADDR_APP_PASSWORD"]
-TO_ADDR = os.environ["TO_ADDR"]
-SECRET_KEY = os.environ["FLASK_KEY"]
+HOST_EMAIL = os.environ.get("HOST_EMAIL")
+FROM_ADDR = os.environ.get("FROM_ADDR")
+FROM_ADDR_APP_PASSWORD = os.environ.get("FROM_ADDR_APP_PASSWORD")
+TO_ADDR = os.environ.get("TO_ADDR")
+SECRET_KEY = os.environ.get("FLASK_KEY")
 
 # For the footer's copyright year.
 current_year = datetime.datetime.now().year
 
 app = Flask(__name__)
 Bootstrap5(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blogs.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///blogs.db")
 app.secret_key = SECRET_KEY
 db.init_app(app)
 CKEditor(app)
