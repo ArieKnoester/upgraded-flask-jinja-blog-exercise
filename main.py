@@ -29,7 +29,7 @@ HOST_EMAIL = os.environ["HOST_EMAIL"]
 FROM_ADDR = os.environ["FROM_ADDR"]
 FROM_ADDR_APP_PASSWORD = os.environ["FROM_ADDR_APP_PASSWORD"]
 TO_ADDR = os.environ["TO_ADDR"]
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ["FLASK_KEY"]
 
 # For the footer's copyright year.
 current_year = datetime.datetime.now().year
@@ -232,7 +232,7 @@ def contact():
         email = request.form['email']
         phone = request.form['phone']
         message_body = request.form['message_body']
-        print(f"name: {name}\nemail: {email}\nphone: {phone}\nmessage: {message_body}")
+        # print(f"name: {name}\nemail: {email}\nphone: {phone}\nmessage: {message_body}")
         message = MIMEMultipart("alternative")
         message["Subject"] = "New contact message from blog"
         message["From"] = FROM_ADDR
