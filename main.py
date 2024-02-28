@@ -163,6 +163,7 @@ def display_post(post_id):
         )
         db.session.add(new_comment)
         db.session.commit()
+        return redirect(url_for('display_post', post_id=post_id))
     return render_template("post.html", post=post, form=comment_form, comments=related_comments, year=current_year)
 
 
