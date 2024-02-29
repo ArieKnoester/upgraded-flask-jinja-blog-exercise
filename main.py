@@ -20,11 +20,11 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
-from dotenv import load_dotenv  # Only used locally.
+# from dotenv import load_dotenv  # Only used locally.
 from functools import wraps
 
 
-load_dotenv(".env")  # Only used locally.
+# load_dotenv(".env")  # Only used locally.
 HOST_EMAIL = os.environ.get("HOST_EMAIL")
 FROM_ADDR = os.environ.get("FROM_ADDR")
 FROM_ADDR_APP_PASSWORD = os.environ.get("FROM_ADDR_APP_PASSWORD")
@@ -270,4 +270,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
