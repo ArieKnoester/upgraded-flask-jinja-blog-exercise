@@ -26,7 +26,7 @@
                             </a>
                                 <p class="post-meta">
                                     Posted by
-                                    <a href="#!">{{ post.author.name }}</a>
+                                    {{ post.author.name }}
                                     on {{ post.date }}
                                     {% if current_user.is_admin %}
                                     <a href="{{ url_for('delete', post_id=post.id) }}">✘</a>
