@@ -1,9 +1,12 @@
 # upgraded-flask-jinja-blog-exercise
 
+Deployed at https://some-dudes-blog.onrender.com
+(Free Render sites spin down with inactivity which may delay requests to the site)
+(Database will expire May 29, 2024)
+
 ## Description
 
 An updated version of a simple blog exercise at https://github.com/ArieKnoester/flask-jinja-blog-exercise
-
 
 Changes from the original include:
 - Start Bootstrap's clean blog template (https://startbootstrap.com/previews/clean-blog)
