@@ -20,11 +20,11 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
-# from dotenv import load_dotenv  # Only used locally.
+from dotenv import load_dotenv  # Only used locally.
 from functools import wraps
 
 
-# load_dotenv(".env")  # Only used locally.
+load_dotenv(".env")  # Only used locally.
 HOST_EMAIL = os.environ.get("HOST_EMAIL")
 FROM_ADDR = os.environ.get("FROM_ADDR")
 FROM_ADDR_APP_PASSWORD = os.environ.get("FROM_ADDR_APP_PASSWORD")
@@ -154,7 +154,7 @@ def logout():
 def display_post(post_id):
     comment_form = CommentForm()
     post = db.get_or_404(BlogPost, post_id)
-    related_comments = db.session.execute(db.select(Comment).filter(post_id == post.id)).scalars()
+    related_comments = db.session.execute(db.select(Comment).filter_by(post_id=post_id)).scalars()
     if comment_form.validate_on_submit():
         new_comment = Comment(
             text=nh3.clean(request.form.get("text")),
@@ -270,4 +270,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
