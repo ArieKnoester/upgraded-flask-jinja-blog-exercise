@@ -1,8 +1,8 @@
 # upgraded-flask-jinja-blog-exercise
 
 Deployed at https://some-dudes-blog.onrender.com
-(Free Render sites spin down with inactivity which may delay requests to the site)
-(Database will expire May 29, 2024)
+- Free Render sites spin down with inactivity which may delay requests to the site
+- Database will expire May 29, 2024
 
 ## Description
 
