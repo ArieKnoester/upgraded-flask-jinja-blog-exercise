@@ -5,7 +5,7 @@
 from flask import Flask, abort, render_template, request, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap5
-from flask_login import login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import login_user, LoginManager, logout_user, current_user
 from flask_gravatar import Gravatar
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.db import db
